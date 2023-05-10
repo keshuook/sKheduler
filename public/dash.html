@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css">
+    <title>Check sKhedule</title>
+</head>
+<body>
+    <noscript>
+        <meta http-equiv = "refresh" content = "0; url = /nojavascripterror" />
+    </noscript>
+    <div id="nav">
+        <a href="/">Home</a>
+        <a href="/create">Create</a>
+        <a href="#" selected>Dashboard</a>
+    </div>
+    <div id="components"></div>
+    <script>
+        const dayOfTheWeek = {
+            "SATURDAY": 0,
+            "SUNDAY": 1,
+            "MONDAY": 2,
+            "TUESDAY": 3,
+            "WEDNESDAY": 4,
+            "THURSDAY": 5,
+            "FRIDAY": 6
+        };
+        function openEdit(data, i){
+            const edit = window.open("/edit", "_blank");
+            edit.addEventListener('load', () => {
+                edit.document.getElementsByName("element-number")[0].value = i;
+                
+                const opts = edit.document.getElementsByTagName("option");
+                Array.from(opts).forEach(element => {
+                    if(data.day.includes(element.value)){
+                        element.classList.add("option-selected");
+                    }
+                });
+                edit.document.getElementsByName("dotw")[0].value = data.day;
+
+                edit.addEventListener('submit', () => {
+                    window.location = window.location;
+                });
+                edit.document.getElementsByName("time")[0].value = data.time;
+                const relement = edit.document.getElementsByName("reason")[0];
+                relement.value = data.reason;
+                edit.document.getElementsByName("description")[0].value = data.description;
+            });
+        }
+        function makeComponent(data, i){
+            const component = document.createElement("div");
+            const time = document.createElement("input");
+            const edit = document.createElement("button");
+            const bin = document.createElement("button");
+
+            time.type = "time"
+            time.disabled = true;
+            time.step = 1;
+            time.setAttribute("value", data.time);
+
+            edit.innerHTML = "&#9998;";
+            bin.innerHTML = "&#128465;";
+
+            bin.style.backgroundColor = "#ff2273";
+            bin.style.color = "#222";
+            bin.style.fontWeight = "800";
+            edit.addEventListener('click', () => {
+                openEdit(data, i);
+            });
+            bin.addEventListener("click", () => {
+                fetch("/delete_alarm", {
+                    method: 'delete',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({id: i})
+                });
+                window.location = window.location;
+            });
+
+            component.appendChild(time)
+            component.append(`${data.reason}`);
+            component.innerHTML += `<span class="day">${data.day.toString()}</span>`
+            component.appendChild(bin);
+            component.appendChild(edit);
+
+            component.classList.add("component");
+
+            document.getElementById("components").appendChild(component);
+        }
+        fetch("/$alarm").then(response => {
+            return response.json()
+        }).then(data => {
+            var i = 0;
+            const components = [];
+            data.items.forEach(element => {
+                components.push({'element':element, 'id':i});
+                i++;
+            });
+            components.sort((x, y) => {
+                const d1 = dayOfTheWeek[x.element.day];
+                const d2 = dayOfTheWeek[y.element.day];
+
+                const t1 = parseInt(x.element.time.replace(/:/g, ""));
+                const t2 = parseInt(y.element.time.replace(/:/g, ""));
+
+                return d1 == d2 ? (t1 > t2 ? 1 : -1) : (d1 > d2 ? 1 : -1);
+            });
+            components.forEach(element => {
+                makeComponent(element.element, element.id);
+            })
+        });
+    </script>
+</body>
+</html>

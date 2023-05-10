@@ -1,0 +1,148 @@
+body {
+    background-color: burlywood;
+}
+.component {
+    background-color: #222222;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px #66666676, 0 5px 5px #66666694;
+    padding: 2.5vh;
+    margin: 5px;
+    color: #fff;
+    border: 2px solid burlywood;
+    text-indent: 20px;
+    font-size: 24px;
+}
+.component input {
+    position: relative;
+    left: -20px;
+    padding-left: 3%;
+    font-size: 24px;
+    background-color: #fff;
+    border: #222222 solid 2px;
+    border-radius: 5px;
+}
+.component button {
+    font-size: 28px;
+    float: right;
+    cursor: pointer;
+    width: 40px;
+    border: none;
+    border-radius: 5px;
+    height: 40px;
+    margin-left: 1vw;
+}
+
+#nav {
+    background-color: #222222;
+    width: 100vw;
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 6vh;
+    padding: 2vh 1vw;
+    box-shadow: 0 5px 5px 0#222222, 0 5px 5px 0 #222222;
+}
+#nav a {
+    margin: 0 1vw;
+    color: #fff;
+    text-decoration: none;
+    font-size: 32px;
+    cursor: pointer;
+}
+#nav a[selected] {
+    color: #ccc;
+}
+#nav a[selected]:hover {
+    color: #ccc;
+}
+#nav a:hover {
+    color: #ddd;
+}
+#components {
+    margin-top: 15vh;
+}
+form, #body-div {
+    position: absolute;
+    width: 70vw;
+    left: 10vw;
+    background-color: #222222;
+    border-radius: 5px;
+    padding: 5vh 5vw;
+    color: #fff;
+    box-shadow: 0 5px 5px 0#222222, 0 5px 5px 0 #222222;
+    font-size: 20px;
+}
+textarea {
+    width: 69.45vw;
+    resize: vertical;
+    height: 240px;
+}
+input, textarea, label {
+    margin: 6px 0;
+    font-size: 20px;
+    border-radius: 5px;
+    outline: none;
+}
+input[type=submit] {
+    width: 70vw;
+    font-size: 30px;
+    cursor: pointer;
+}
+input:disabled {
+    background-color: #ccc;
+    cursor: not-allowed;
+}
+.day {
+    font-size: 12px;
+    position: relative;
+    float: left;
+    left: -1vw;
+    top: 7.5vh;
+    width: 0;
+}
+a {
+    color: #ccc;
+    text-decoration: none;
+}
+a:hover {
+    color: #aaa;
+}
+.select, .select-body option {
+    opacity: 1;
+    background-color: #fff;
+    color: #222222;
+    cursor: pointer;
+    transition: background-color 75ms;
+}
+.select:hover, .select-body option:hover {
+    background-color: #eee;
+}
+.select::after {
+    content: "\02B9F";
+    font-weight: bold;
+    float: right;
+    position: relative;
+    bottom: 5px;
+    right: 5px;
+}
+.select-body {
+    transition: 300ms opacity, 200ms width;
+    width: 70vw;
+}
+.option-selected::before {
+    content: "\1F533 \A0";
+}
+option::before {
+    content: "\02B1C \A0";
+}
+.hidden {
+    width: 0px;
+    font-size: 0px;
+    height: 0px;
+    display: flex;
+    opacity: 0;
+    position: absolute;
+}
+.up-sel::after {
+    content: "\02B9D";
+}

@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css">
+    <title>Edit sKhedule</title>
+</head>
+<body>
+    <noscript>
+        <meta http-equiv = "refresh" content = "0; url = /nojavascripterror" />
+    </noscript>
+    <div id="nav">
+        <a href="/">Home</a>
+        <a href="/create">Create</a>
+        <a href="/dashboard">Dashboard</a>
+    </div>
+    <div id="components">
+        <form method="post" action="/edit_alarm">
+            <label for="reason">Reason for Alarm: </label>
+            <input name="reason" placeholder="Reason for Alarm">
+            <br>
+            <input type="hidden" name="element-number">
+            <div class="select">
+                Select a Day
+            </div>
+            <div class="hidden select-body">
+                <option value="MONDAY">Monday</option>
+                <option value="TUESDAY">Tuesday</option>
+                <option value="WEDNESDAY">Wednesday</option>
+                <option value="THURSDAY">Thursday</option>
+                <option value="FRIDAY">Friday</option>
+                <option value="SATURDAY">Saturday</option>
+                <option value="SUNDAY">Sunday</option>
+            </div>
+            <input type="hidden" value="" name="dotw">
+            <br>
+            <label for="time">Time: </label>
+            <input type="time" name="time" step="1"><br>
+            <textarea name="description">Type the description of the alarm here.</textarea><br>
+            <input type="submit" value="Edit Alarm">
+        </form>
+    </div>
+    <script>
+        const select = document.getElementsByClassName("select")[0];
+        select.addEventListener('click', () => {
+            select.classList.toggle("up-sel");
+            select.nextElementSibling.classList.toggle("hidden");
+            select.nextElementSibling.click();
+        });
+        const opts = document.getElementsByTagName("option");
+        const dotwe = document.getElementsByName("dotw")[0];
+        var dotwa = [];
+        window.addEventListener("load", () => {
+            dotwa = dotwe.value.split(",");
+            console.log(dotwa);
+        });
+        Array.from(opts).forEach(element => {
+            element.addEventListener('click', () => {
+                if(element.classList.contains("option-selected")){
+                    const tempa = [];
+                    const l = dotwa.length;
+                    for(var i = 0;i < l;i++){
+                        const popped = dotwa.pop(); 
+                        if(popped != element.value) tempa.push(popped);
+                    }
+                    tempa.forEach(element => {
+                        dotwa.push(element);
+                    });
+                }else{
+                    dotwa.push(element.value); 
+                }
+                dotwe.value = dotwa.toString();
+                element.classList.toggle("option-selected");
+            });
+        });
+    </script>
+</body>
+</html>

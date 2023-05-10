@@ -1,0 +1,13 @@
+{
+    "items": [
+        {
+            "reason": "A Sample Alarm",
+            "day": [
+                "SUNDAY",
+                ""
+            ],
+            "time": "12:00:00",
+            "description": "The description of a sample alarm."
+        }
+    ]
+}
